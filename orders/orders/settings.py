@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.vk',
     'baton.autodiscover',
     "drf_spectacular",
+    'cachalot'
 ]
 
 MIDDLEWARE = [
@@ -176,21 +177,25 @@ BATON = {
     'SUPPORT_HREF': 'mailto:support@example.com',
 }
 
+CACHALOT_ENABLED = True  # Включаем кеширование
+CACHALOT_TIMEOUT = 60  # Время жизни кеша в секундах (60 сек)
+CACHALOT_ONLY_CACHABLE_TABLES = set()  # Кешировать все таблицы, если True - только указанные
 
 
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1", 
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
-
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://localhost:6379',
-    }
-}
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
