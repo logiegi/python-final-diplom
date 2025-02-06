@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.vk',
     'baton.autodiscover',
     "drf_spectacular",
-    'cachalot'
+    'cachalot',
+    'django_celery_beat'
 ]
 
 MIDDLEWARE = [
@@ -117,6 +118,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CELERY_BROKER_URL = "redis://127.0.0.1:6379/2"  # Redis используется как брокер
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
