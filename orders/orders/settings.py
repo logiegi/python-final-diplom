@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.vk',
     'baton.autodiscover',
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -163,8 +164,20 @@ REST_FRAMEWORK = {
         'anon': '60/minute',
     },
 
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
+
+
+BATON = {
+    'SITE_HEADER': 'Моя Админка',
+    'INDEX_TITLE': 'Добро пожаловать!',
+    'SUPPORT_HREF': 'mailto:support@example.com',
+}
+
+
+
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
