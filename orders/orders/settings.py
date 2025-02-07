@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     'baton.autodiscover',
     "drf_spectacular",
     'cachalot',
-    'django_celery_beat'
+    'django_celery_beat',
+    'versatileimagefield',
 ]
 
 MIDDLEWARE = [
@@ -174,6 +175,19 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+}
+
+VERSATILEIMAGEFIELD_SETTINGS = {
+    'cache_length': 2592000,  # Время жизни кеша (30 дней)
+    'cache_name': 'versatileimagefield_cache',
+    'jpeg_resize_quality': 70,  # Качество JPEG
+    'progressive_jpeg': True,  # Улучшенная загрузка JPEG
+    'sized_directory_name': '__processed__',
+    'filtered_directory_name': '__filtered__',
+    'placeholder_directory_name': '__placeholder__',
+    'create_images_on_demand': True,  # Создавать миниатюры при запросе
+    'image_key_post_processor': None,
+    'progressive': False,
 }
 
 

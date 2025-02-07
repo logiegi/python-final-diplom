@@ -4,6 +4,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_rest_passwordreset.tokens import get_token_generator
+from versatileimagefield.fields import VersatileImageField, PPOIField
 
 STATE_CHOICES = (
     ('cart', 'Статус корзины'),
@@ -84,6 +85,19 @@ class User(AbstractUser):
     )
     type = models.CharField(verbose_name='Тип пользователя', choices=USER_TYPE_CHOICES, max_length=5, default='buyer')
 
+    # Новое поле для загрузки аватаров
+    avatar = VersatileImageField(
+        upload_to='avatars/',
+        ppoi_field='avatar_ppoi',
+        blank=True,
+        null=True
+    )
+    avatar_ppoi = PPOIField()
+
+    def get_avatar_thumbnail(self):
+        """ Возвращает миниатюру 100x100 """
+        return self.avatar.crop['100x100'].url if self.avatar else None
+
     class Meta:
         verbose_name = 'Пользователь'
         verbose_name_plural = "Список пользователей"
@@ -123,15 +137,33 @@ class Category(models.Model):
         return self.name
 
 
+
 class Product(models.Model):
     name = models.CharField(max_length=80, verbose_name='Название')
-    category = models.ForeignKey(Category, verbose_name='Категория', related_name='products', blank=True,
-                                on_delete=models.CASCADE)
+    category = models.ForeignKey(
+        Category, verbose_name='Категория', related_name='products', blank=True,
+        on_delete=models.CASCADE
+    )
+    image = VersatileImageField(
+        upload_to='products/',  # Папка для хранения изображений
+        ppoi_field='image_ppoi',  # Поле для выбора точки интереса
+        blank=True,
+        null=True
+    )
+    image_ppoi = PPOIField()  # Позволяет задать точку фокуса
 
     class Meta:
         verbose_name = 'Продукт'
         verbose_name_plural = "Список продуктов"
         ordering = ('-name',)
+
+    def get_thumbnail(self):
+        """ Возвращает миниатюру 200x200 """
+        return self.image.crop['200x200'].url if self.image else None
+
+    def get_large(self):
+        """ Возвращает изображение 600x600 """
+        return self.image.thumbnail['600x600'].url if self.image else None
 
     def __str__(self):
         return self.name
