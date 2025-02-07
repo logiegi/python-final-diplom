@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'cachalot',
     'django_celery_beat',
     'versatileimagefield',
+    'silk'
 ]
 
 MIDDLEWARE = [
@@ -68,6 +69,7 @@ MIDDLEWARE = [
     'django.middleware.cache.FetchFromCacheMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'silk.middleware.SilkyMiddleware',
 ]
 
 ROOT_URLCONF = 'orders.urls'
