@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 from os import environ
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -138,6 +139,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -177,9 +179,14 @@ REST_FRAMEWORK = {
 
 BATON = {
     'SITE_HEADER': 'Моя Админка',
-    'INDEX_TITLE': 'Добро пожаловать!',
-    'SUPPORT_HREF': 'mailto:support@example.com',
+    'SITE_TITLE': 'Админка проекта',
+    'INDEX_TITLE': 'Добро пожаловать в админку!',
+    'SUPPORT_HREF': 'https://github.com/',  # Можно поставить свой URL
+    'COPYRIGHT': 'Мой проект © 2025',
+    'POWERED_BY': '<a href="https://baton.dev">Baton</a>',
+    'SHOW_UI_BUILDER': True,  # Показывает UI-редактор
 }
+
 
 CACHALOT_ENABLED = True  # Включаем кеширование
 CACHALOT_TIMEOUT = 60  # Время жизни кеша в секундах (60 сек)
