@@ -18,6 +18,15 @@ from backend.models import Shop, Category, ProductInfo, Order, OrderItem, Contac
 from backend.serializers import UserSerializer, CategorySerializer, ShopSerializer, ProductInfoSerializer, \
     OrderItemSerializer, OrderSerializer, ContactSerializer
 from backend.tasks import send_email, get_import
+from rest_framework.views import APIView
+from rest_framework.response import Response
+import sentry_sdk
+
+class TestSentryView(APIView):
+    def get(self, request, *args, **kwargs):
+        sentry_sdk.capture_message("🚨 Тестовое сообщение в Sentry")
+        raise ValueError("🔴 Искусственная ошибка для тестирования Sentry!")
+        return Response({"message": "Этот код не выполнится!"})
 
 
 class HomeView(TemplateView):

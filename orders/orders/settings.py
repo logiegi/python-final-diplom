@@ -243,3 +243,14 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Moscow'
+
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn="https://30ee06ff05fc278c81a37b5335181d8d@o4508777545400320.ingest.de.sentry.io/4508777552085072",
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=1.0,  # 100% отслеживание (можно снизить)
+    send_default_pii=True,  # Отправлять данные о пользователях
+)

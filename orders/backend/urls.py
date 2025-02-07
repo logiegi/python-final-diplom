@@ -4,6 +4,7 @@ from backend.views import PartnerUpdate, RegisterUser, LoginUser, CategoryView, 
     BasketView, \
     UserDetails, ContactView, OrderView, PartnerState, PartnerOrders, ConfirmUser
 from rest_framework.routers import DefaultRouter
+from .views import TestSentryView
 
 r = DefaultRouter()
 r.register('products', ProductInfoView)
@@ -25,4 +26,5 @@ urlpatterns += [
     path('shops/', ShopView.as_view(), name='shops'),
     path('basket/', BasketView.as_view(), name='basket'),
     path('order/', OrderView.as_view(), name='order'),
+    path("test-sentry/", TestSentryView.as_view(), name="test-sentry"),
 ]
